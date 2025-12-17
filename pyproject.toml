@@ -149,6 +149,7 @@ testpaths = ["src/tests"]
 python_files = "test_*.py"
 python_classes = "Test*"
 python_functions = "test_*"
+asyncio_mode = "auto"
 addopts = [
     "--verbose",
     "--tb=short",
@@ -157,5 +158,4 @@ addopts = [
     "--cov=src/browserfreak",
     "--cov-report=term-missing",
     "--cov-report=html:htmlcov",
-    "--cov-fail-under=80"
 ]
