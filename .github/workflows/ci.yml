@@ -41,17 +41,13 @@ jobs:
         isort --check-only src/
         flake8 src/
 
-    # - name: Run tests
-    #   run: |
-    #     pytest --cov=src/browserfreak --cov-report=xml --cov-fail-under=80
+    - name: Run tests
+      run: pytest --cov=src/browserfreak --cov-branch --cov-report=xml
 
-    - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v3
+    - name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v5
       with:
-        file: ./coverage.xml
-        flags: unittests
-        name: codecov-umbrella
-        fail_ci_if_error: false
+        token: ${{ secrets.CODECOV_TOKEN }}
 
   security:
     runs-on: ubuntu-latest
@@ -106,7 +102,7 @@ jobs:
       run: twine check dist/*
 
     - name: Upload build artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: dist
         path: dist/
