@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  browserfreak:
+    build: .
+    container_name: browserfreak
+    environment:
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - ANTHROPIC_MODEL=${ANTHROPIC_MODEL:-claude-sonnet-4-5}
+      - ANTHROPIC_TEMPERATURE=${ANTHROPIC_TEMPERATURE:-0.0}
+      - MAX_ITERATIONS=${MAX_ITERATIONS:-5}
+      - USE_REAL_BROWSER=${USE_REAL_BROWSER:-false}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+    volumes:
+      - ./logs:/app/logs
+      - ./data:/app/data
+    ports:
+      - "8501:8501"  # Streamlit UI
+      - "8000:8000"  # FastAPI (if used)
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import asyncio; from src.browserfreak.browser_manager import health_check; asyncio.run(health_check())"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    cap_add:
+      - SYS_ADMIN  # Required for Playwright browser automation
+    shm_size: 2gb  # Shared memory for Chrome
+
+  # Optional: Redis for caching (uncomment if needed)
+  # redis:
+  #   image: redis:7-alpine
+  #   container_name: browserfreak-redis
+  #   ports:
+  #     - "6379:6379"
+  #   volumes:
+  #     - redis_data:/data
+  #   restart: unless-stopped
+
+volumes:
+  redis_data:
