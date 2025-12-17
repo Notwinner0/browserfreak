@@ -87,7 +87,7 @@ ensure_newline_before_comments = true
 known_first_party = ["browserfreak"]
 
 [tool.flake8]
-max-line-length = 100
+max-line-length = 300
 extend-ignore = ["E203", "W503", "E501"]
 exclude = [
     ".git",
