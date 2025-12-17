@@ -137,18 +137,18 @@ def config():
     click.echo("BrowserFreak Configuration:")
     click.echo("=" * 40)
 
-    click.echo(f"Browser Settings:")
+    click.echo("Browser Settings:")
     click.echo(f"  Headless: {settings.browser.headless}")
     click.echo(f"  Channel: {settings.browser.channel}")
     click.echo(f"  Default Timeout: {settings.browser.default_timeout}ms")
     click.echo(f"  Page Load Timeout: {settings.browser.page_load_timeout}ms")
 
-    click.echo(f"\nAgent Settings:")
+    click.echo("\nAgent Settings:")
     click.echo(f"  Max Iterations: {settings.agent.max_iterations}")
     click.echo(f"  Use Real Browser: {settings.agent.use_real_browser}")
     click.echo(f"  Log Level: {settings.agent.log_level}")
 
-    click.echo(f"\nAnthropic API:")
+    click.echo("\nAnthropic API:")
     click.echo(f"  Available: {settings.anthropic.is_available}")
     if settings.anthropic.is_available:
         click.echo(f"  Model: {settings.anthropic.model}")
